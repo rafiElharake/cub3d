@@ -22,12 +22,16 @@
 # include <errno.h>
 # include <sys/time.h>
 # include "minilibx-linux/mlx.h"
+# include "gnl/get_next_line.h"
 
 /* Window settings */
-# define WINDOW_WIDTH 1024
-# define WINDOW_HEIGHT 768
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 # define FOV 60.0
 # define PI 3.14159265359
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 
 /* Key codes (may vary by system) */
 # define KEY_ESC 65307
@@ -37,15 +41,19 @@
 # define KEY_D 100
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define KEY_UP 65362
+# define KEY_DOWN 65364
 
 /* Movement settings */
 # define MOVE_SPEED 0.05
 # define ROTATION_SPEED 0.05
+# define MOVE_STEP (0.25 * CELL_SIZE)
+# define MOUSE_SENSITIVITY 0.002
 
 /* Map settings */
 # define MAP_WIDTH 10
 # define MAP_HEIGHT 8
-# define CELL_SIZE 32
+# define CELL_SIZE 4
 
 /* Map characters */
 # define WALL '1'
@@ -69,8 +77,6 @@
 # define ERR_TEXTURE "Texture error"
 # define ERR_COLOR "Invalid color"
 # define ERR_MLX "MLX initialization failed"
-
-extern const char *g_map[MAP_HEIGHT];
 
 /* Texture structure */
 typedef struct s_texture
@@ -168,6 +174,7 @@ int		parse_color(char *line, t_game *game);
 int		parse_map(int fd, t_game *game);
 int		validate_map(t_game *game);
 int		find_player(t_game *game);
+int		load_map(const char *filename, t_game *game);
 
 /* Graphics initialization */
 int		init_mlx(t_game *game);
@@ -187,15 +194,17 @@ void	draw_floor_ceiling(t_game *game);
 void	put_pixel(t_game *game, int x, int y, int color);
 int		get_texture_pixel(t_texture *texture, int x, int y);
 void	draw_simple_scene(t_game *game);
+void	draw_minimap(t_game *game);
 
 /* Input handling */
 int		handle_keypress(int keycode, t_game *game);
 int		handle_keyrelease(int keycode, t_game *game);
 int		handle_close(t_game *game);
 void	process_input(t_game *game);
+int		handle_mouse(int x, int y, t_game *game);
 
 /* Movement */
-void	move_player(t_game *game, double move_x, double move_y);
+void	move_player(t_game *game, double dx, double dy);
 int		check_collision(t_game *game, double x, double y);
 void	rotate_player(t_game *game, double angle);
 
@@ -204,15 +213,10 @@ int		create_color(int r, int g, int b);
 double	normalize_angle(double angle);
 double	deg_to_rad(double degrees);
 double	rad_to_deg(double radians);
-char	*ft_strdup(const char *s1);
-int		ft_strcmp(const char *s1, const char *s2);
-int		ft_strlen(const char *str);
 
 /* Error handling */
-void	error_exit(const char *message);
-void	cleanup_game(t_game *game);
-void	free_map(char **map);
-void	free_textures(t_game *game);
+void	error_exit(const char *msg);
+void	free_map(char **map, int height);
 
 /* Memory management */
 void	*safe_malloc(size_t size);
