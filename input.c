@@ -5,12 +5,17 @@ void move_player(t_game *game, double dx, double dy) {
     double new_y = game->player_y + dy;
     int map_x = (int)(new_x / CELL_SIZE);
     int map_y = (int)(new_y / CELL_SIZE);
-    if (!is_wall(game, map_x, map_y)) {
+    int current_map_x = (int)(game->player_x / CELL_SIZE);
+    int current_map_y = (int)(game->player_y / CELL_SIZE);
+    
+    if (!is_wall(game, map_x, map_y) &&
+        !is_wall(game, current_map_x, map_y) &&
+        !is_wall(game, map_x, current_map_y)) 
+        { 
         game->player_x = new_x;
         game->player_y = new_y;
     }
 }
-
 int handle_keypress(int keycode, t_game *game)
 {
     printf("Key pressed: %d\n", keycode);
