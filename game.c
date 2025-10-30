@@ -8,6 +8,12 @@ void init_game(t_game *game)
     game->image_data = NULL;
     game->window_width = WINDOW_WIDTH;
     game->window_height = WINDOW_HEIGHT;
+    
+    game->input.w = 0;
+    game->input.s = 0;
+    game->input.left = 0;
+    game->input.right = 0;
+    
     int found = 0;
     int y = 0;
     while (y < game->map_height && !found) {

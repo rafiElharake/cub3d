@@ -21,6 +21,7 @@
 # include <string.h>
 # include <errno.h>
 # include <sys/time.h>
+# include <stddef.h>
 # include "minilibx-linux/mlx.h"
 # include "gnl/get_next_line.h"
 
@@ -45,8 +46,8 @@
 # define KEY_DOWN 65364
 
 /* Movement settings */
-# define MOVE_SPEED 0.05
-# define ROTATION_SPEED 0.05
+# define MOVE_SPEED 0.2
+# define ROTATION_SPEED 0.001
 # define MOVE_STEP (0.25 * CELL_SIZE)
 # define MOUSE_SENSITIVITY 0.002
 
@@ -81,12 +82,12 @@
 /* Texture structure */
 typedef struct s_texture
 {
-	void	*image;
+	void	*img;
 	char	*data;
 	int		width;
 	int		height;
-	int		bits_per_pixel;
-	int		line_length;
+	int		bpp;
+	int		line_len;
 	int		endian;
 }	t_texture;
 
@@ -147,8 +148,7 @@ typedef struct s_game
 	t_input		input;
 
 	/* Textures */
-	t_texture	textures[4];
-	char		*texture_paths[4];
+	t_texture	wall_texture;
 
 	/* Colors */
 	int			floor_color;
@@ -178,6 +178,8 @@ int		load_map(const char *filename, t_game *game);
 
 /* Graphics initialization */
 int		init_mlx(t_game *game);
+int		load_texture(t_game *game, t_texture *texture, char *path);
+void	init_textures(t_game *game);
 int		load_textures(t_game *game);
 void	init_player(t_game *game, int x, int y, char direction);
 
@@ -219,7 +221,6 @@ void	error_exit(const char *msg);
 void	free_map(char **map, int height);
 
 /* Memory management */
-void	*safe_malloc(size_t size);
 void	safe_free(void **ptr);
 
 /* Game initialization */

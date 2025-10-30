@@ -16,9 +16,27 @@ void move_player(t_game *game, double dx, double dy) {
         game->player_y = new_y;
     }
 }
+
+void process_input(t_game *game)
+{
+    double move_speed = MOVE_SPEED;
+    double rotation_speed = ROTATION_SPEED;
+
+    
+    if (game->input.w) {
+        move_player(game, move_speed * cos(game->player_angle), move_speed * sin(game->player_angle));
+    }
+    if (game->input.s) {
+        move_player(game, -move_speed * cos(game->player_angle), -move_speed * sin(game->player_angle));
+    }
+    if (game->input.left)
+        game->player_angle -= rotation_speed;
+    if (game->input.right)
+        game->player_angle += rotation_speed;
+}
+
 int handle_keypress(int keycode, t_game *game)
 {
-    printf("Key pressed: %d\n", keycode);
     if (keycode == KEY_ESC)
     {
         mlx_destroy_image(game->mlx, game->image);
@@ -27,17 +45,19 @@ int handle_keypress(int keycode, t_game *game)
         free(game->mlx);
         exit(0);
     }
-    if (keycode == 'w' || keycode == 'W') {
-        move_player(game, MOVE_STEP * cos(game->player_angle), MOVE_STEP * sin(game->player_angle));
-    }
-    if (keycode == 's' || keycode == 'S') {
-        move_player(game, -MOVE_STEP * cos(game->player_angle), -MOVE_STEP * sin(game->player_angle));
-    }
-    if (keycode == KEY_LEFT)
-        game->player_angle -= 0.1;
-    if (keycode == KEY_RIGHT)
-        game->player_angle += 0.1;
+    if (keycode == 'w' || keycode == 'W') game->input.w = 1;
+    if (keycode == 's' || keycode == 'S') game->input.s = 1;
+    if (keycode == KEY_LEFT || keycode == 'a' || keycode == 'A') game->input.left = 1;
+    if (keycode == KEY_RIGHT || keycode == 'd' || keycode == 'D') game->input.right = 1;
+    return 0;
+}
 
+int handle_keyrelease(int keycode, t_game *game)
+{
+    if (keycode == 'w' || keycode == 'W') game->input.w = 0;
+    if (keycode == 's' || keycode == 'S') game->input.s = 0;
+    if (keycode == KEY_LEFT || keycode == 'a' || keycode == 'A') game->input.left = 0;
+    if (keycode == KEY_RIGHT || keycode == 'd' || keycode == 'D') game->input.right = 0;
     return 0;
 }
 
