@@ -114,16 +114,44 @@ void draw_simple_scene(t_game *game)
         int wall_start = (game->window_height - wall_height) / 2;
         int wall_end = wall_start + wall_height;
         
+        // Calculate texture X coordinate
+        double wall_x;
+        if (side == 0)
+            wall_x = game->player_y / CELL_SIZE + perp_wall_dist * ray_dy;
+        else
+            wall_x = game->player_x / CELL_SIZE + perp_wall_dist * ray_dx;
+        wall_x -= floor(wall_x);
+        
+        int tex_x = (int)(wall_x * (double)game->wall_texture.width);
+        if (side == 0 && ray_dx > 0)
+            tex_x = game->wall_texture.width - tex_x - 1;
+        if (side == 1 && ray_dy < 0)
+            tex_x = game->wall_texture.width - tex_x - 1;
+        
         y = 0;
         while (y < game->window_height) {
             if (y < wall_start)
                 put_pixel(game, x, y, create_color(50, 50, 100));
             else if (y < wall_end) {
-                // Different shading for x-side vs y-side walls
-                if (side == 1)
-                    put_pixel(game, x, y, create_color(150, 150, 150));
-                else
-                    put_pixel(game, x, y, create_color(100, 100, 100));
+                // Calculate texture Y coordinate - this is the key to avoid slanting
+                int tex_y = ((y - wall_start) * game->wall_texture.height) / wall_height;
+                
+                // Ensure tex_y is within bounds
+                if (tex_y >= game->wall_texture.height)
+                    tex_y = game->wall_texture.height - 1;
+                
+                int color = get_texture_pixel(&game->wall_texture, tex_x, tex_y);
+                
+                // Apply shading for different wall sides
+                if (side == 1) {
+                    // Darken y-side walls
+                    int r = ((color >> 16) & 0xFF) / 2;
+                    int g = ((color >> 8) & 0xFF) / 2;
+                    int b = (color & 0xFF) / 2;
+                    color = create_color(r, g, b);
+                }
+                
+                put_pixel(game, x, y, color);
             } else
                 put_pixel(game, x, y, create_color(100, 50, 0));
             y++;

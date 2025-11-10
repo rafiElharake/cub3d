@@ -57,7 +57,41 @@ int init_mlx(t_game *game)
                                         &game->line_length, &game->endian);
     if (!game->image_data)
         return 0;
+    
+    // Load textures
+    if (!load_textures(game))
+        return 0;
+    
     return 1;
+}
+
+int load_texture(t_game *game, t_texture *texture, char *path)
+{
+    texture->img = mlx_xpm_file_to_image(game->mlx, path, &texture->width, &texture->height);
+    if (!texture->img)
+        return 0;
+    texture->data = mlx_get_data_addr(texture->img, &texture->bpp, &texture->line_len, &texture->endian);
+    if (!texture->data)
+        return 0;
+    return 1;
+}
+
+int load_textures(t_game *game)
+{
+    if (!load_texture(game, &game->wall_texture, "textures/wall.xpm"))
+        return 0;
+    return 1;
+}
+
+int get_texture_pixel(t_texture *texture, int x, int y)
+{
+    char *pixel;
+    
+    if (x < 0 || x >= texture->width || y < 0 || y >= texture->height)
+        return 0;
+    
+    pixel = texture->data + (y * texture->line_len + x * (texture->bpp / 8));
+    return *(int*)pixel;
 }
 
 int handle_close(t_game *game)
