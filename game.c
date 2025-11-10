@@ -8,9 +8,12 @@ void init_game(t_game *game)
     game->image_data = NULL;
     game->window_width = WINDOW_WIDTH;
     game->window_height = WINDOW_HEIGHT;
+
     
     game->input.w = 0;
+    game->input.a = 0;
     game->input.s = 0;
+    game->input.d = 0;
     game->input.left = 0;
     game->input.right = 0;
     
@@ -57,8 +60,6 @@ int init_mlx(t_game *game)
                                         &game->line_length, &game->endian);
     if (!game->image_data)
         return 0;
-    
-    // Load textures
     if (!load_textures(game))
         return 0;
     
@@ -78,7 +79,13 @@ int load_texture(t_game *game, t_texture *texture, char *path)
 
 int load_textures(t_game *game)
 {
-    if (!load_texture(game, &game->wall_texture, "textures/wall.xpm"))
+    if (!load_texture(game, &game->north_texture, "textures/WallN.xpm"))
+        return 0;
+    if (!load_texture(game, &game->south_texture, "textures/WallS.xpm"))
+        return 0;
+    if (!load_texture(game, &game->east_texture, "textures/WallE.xpm"))
+        return 0;
+    if (!load_texture(game, &game->west_texture, "textures/WallW.xpm"))
         return 0;
     return 1;
 }

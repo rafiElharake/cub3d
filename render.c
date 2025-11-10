@@ -53,7 +53,6 @@ void draw_simple_scene(t_game *game)
         ray_dx = cos(ray_angle);
         ray_dy = sin(ray_angle);
         
-        // DDA variables
         int map_x = (int)(game->player_x / CELL_SIZE);
         int map_y = (int)(game->player_y / CELL_SIZE);
         
@@ -63,9 +62,7 @@ void draw_simple_scene(t_game *game)
         double side_dist_x, side_dist_y;
         int step_x, step_y;
         int hit = 0;
-        int side; // 0 for x-side, 1 for y-side
-        
-        // Calculate step and initial sideDist
+        int side;
         if (ray_dx < 0) {
             step_x = -1;
             side_dist_x = ((game->player_x / CELL_SIZE) - map_x) * delta_dist_x;
@@ -81,9 +78,7 @@ void draw_simple_scene(t_game *game)
             side_dist_y = (map_y + 1.0 - (game->player_y / CELL_SIZE)) * delta_dist_y;
         }
         
-        // Perform DDA
         while (hit == 0) {
-            // Jump to next map square, either in x-direction, or in y-direction
             if (side_dist_x < side_dist_y) {
                 side_dist_x += delta_dist_x;
                 map_x += step_x;
@@ -93,19 +88,15 @@ void draw_simple_scene(t_game *game)
                 map_y += step_y;
                 side = 1;
             }
-            // Check if ray has hit a wall
             if (is_wall(game, map_x, map_y))
                 hit = 1;
         }
-        
-        // Calculate distance
         double perp_wall_dist;
         if (side == 0)
             perp_wall_dist = (map_x - (game->player_x / CELL_SIZE) + (1 - step_x) / 2) / ray_dx;
         else
             perp_wall_dist = (map_y - (game->player_y / CELL_SIZE) + (1 - step_y) / 2) / ray_dy;
         
-        // Calculate wall height
         if (perp_wall_dist > 0.0)
             wall_height = (int)(game->window_height / perp_wall_dist);
         else
@@ -114,7 +105,20 @@ void draw_simple_scene(t_game *game)
         int wall_start = (game->window_height - wall_height) / 2;
         int wall_end = wall_start + wall_height;
         
-        // Calculate texture X coordinate
+        // Determine which wall face we hit and select appropriate texture
+        t_texture *current_texture;
+        if (side == 0) { // Hit vertical wall (North/South faces)
+            if (ray_dx > 0)
+                current_texture = &game->east_texture;   // Hitting from west, so east face
+            else
+                current_texture = &game->west_texture;   // Hitting from east, so west face
+        } else { // Hit horizontal wall (East/West faces)  
+            if (ray_dy > 0)
+                current_texture = &game->south_texture;  // Hitting from north, so south face
+            else
+                current_texture = &game->north_texture;  // Hitting from south, so north face
+        }
+        
         double wall_x;
         if (side == 0)
             wall_x = game->player_y / CELL_SIZE + perp_wall_dist * ray_dy;
@@ -122,29 +126,24 @@ void draw_simple_scene(t_game *game)
             wall_x = game->player_x / CELL_SIZE + perp_wall_dist * ray_dx;
         wall_x -= floor(wall_x);
         
-        int tex_x = (int)(wall_x * (double)game->wall_texture.width);
+        int tex_x = (int)(wall_x * (double)current_texture->width);
         if (side == 0 && ray_dx > 0)
-            tex_x = game->wall_texture.width - tex_x - 1;
+            tex_x = current_texture->width - tex_x - 1;
         if (side == 1 && ray_dy < 0)
-            tex_x = game->wall_texture.width - tex_x - 1;
+            tex_x = current_texture->width - tex_x - 1;
         
         y = 0;
         while (y < game->window_height) {
             if (y < wall_start)
                 put_pixel(game, x, y, create_color(50, 50, 100));
             else if (y < wall_end) {
-                // Calculate texture Y coordinate - this is the key to avoid slanting
-                int tex_y = ((y - wall_start) * game->wall_texture.height) / wall_height;
+                int tex_y = ((y - wall_start) * current_texture->height) / wall_height;
+                if (tex_y >= current_texture->height)
+                    tex_y = current_texture->height - 1;
                 
-                // Ensure tex_y is within bounds
-                if (tex_y >= game->wall_texture.height)
-                    tex_y = game->wall_texture.height - 1;
+                int color = get_texture_pixel(current_texture, tex_x, tex_y);
                 
-                int color = get_texture_pixel(&game->wall_texture, tex_x, tex_y);
-                
-                // Apply shading for different wall sides
                 if (side == 1) {
-                    // Darken y-side walls
                     int r = ((color >> 16) & 0xFF) / 2;
                     int g = ((color >> 8) & 0xFF) / 2;
                     int b = (color & 0xFF) / 2;
@@ -178,7 +177,7 @@ int create_color(int r, int g, int b)
 
 int render_frame(t_game *game)
 {
-    process_input(game);  // Process continuous input
+    process_input(game);
     draw_simple_scene(game);
     mlx_put_image_to_window(game->mlx, game->window, game->image, 0, 0);
     return 0;

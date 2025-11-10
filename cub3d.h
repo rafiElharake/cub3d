@@ -148,7 +148,10 @@ typedef struct s_game
 	t_input		input;
 
 	/* Textures */
-	t_texture	wall_texture;
+	t_texture	north_texture;
+	t_texture	south_texture;
+	t_texture	east_texture;
+	t_texture	west_texture;
 
 	/* Colors */
 	int			floor_color;

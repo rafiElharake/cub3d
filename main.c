@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     mlx_hook(game.window, 2, 1L << 0, handle_keypress, &game);
     mlx_hook(game.window, 3, 1L << 1, handle_keyrelease, &game);
     mlx_hook(game.window, 17, 1L << 17, handle_close, &game);
-    mlx_hook(game.window, 6, 1L << 6, handle_mouse, &game); // Mouse motion
+    mlx_hook(game.window, 6, 1L << 6, handle_mouse, &game);
     mlx_loop_hook(game.mlx, render_frame, &game);
     mlx_loop(game.mlx);
     int i = 0;
