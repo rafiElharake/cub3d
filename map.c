@@ -78,12 +78,17 @@ int load_map(const char *filename, t_game *game) {
                 write(2, &c, 1);
                 write(2, "' in map. Allowed: 0,1,N,S,E,W\n", 32);
                 int k = 0;
+                while(k<i){
+                    free(game->map[k]);
+                    k++;
+                }
+                free(game->map);
+                k = 0;
                 while (k < game->map_height) {
                     free(lines[k]);
                     k++;
                 }
                 free(lines);
-                free(game->map);
                 return 0;
             }
             j++;
@@ -102,6 +107,7 @@ int load_map(const char *filename, t_game *game) {
         dst[game->map_width] = 0;
         game->map[i] = dst;
         free(src);
+        lines[i] = NULL;
         i++;
     }
     free(lines);
