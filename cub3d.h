@@ -147,6 +147,12 @@ typedef struct s_game
 	/* Input */
 	t_input		input;
 
+	/* Texture paths */
+	char		*north_path;
+	char		*south_path;
+	char		*east_path;
+	char		*west_path;
+
 	/* Textures */
 	t_texture	north_texture;
 	t_texture	south_texture;
@@ -178,6 +184,8 @@ int		parse_map(int fd, t_game *game);
 int		validate_map(t_game *game);
 int		find_player(t_game *game);
 int		load_map(const char *filename, t_game *game);
+void	parse_config_data(t_game *game, const char *filename);
+void	print_config_data(t_game *game);
 
 /* Graphics initialization */
 int		init_mlx(t_game *game);

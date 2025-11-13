@@ -79,13 +79,13 @@ int load_texture(t_game *game, t_texture *texture, char *path)
 
 int load_textures(t_game *game)
 {
-    if (!load_texture(game, &game->north_texture, "textures/WallN.xpm"))
+    if (!load_texture(game, &game->north_texture, game->north_path))
         return 0;
-    if (!load_texture(game, &game->south_texture, "textures/WallS.xpm"))
+    if (!load_texture(game, &game->south_texture, game->south_path))
         return 0;
-    if (!load_texture(game, &game->east_texture, "textures/WallE.xpm"))
+    if (!load_texture(game, &game->east_texture, game->east_path))
         return 0;
-    if (!load_texture(game, &game->west_texture, "textures/WallW.xpm"))
+    if (!load_texture(game, &game->west_texture, game->west_path))
         return 0;
     return 1;
 }

@@ -135,7 +135,7 @@ void draw_simple_scene(t_game *game)
         y = 0;
         while (y < game->window_height) {
             if (y < wall_start)
-                put_pixel(game, x, y, create_color(50, 50, 100));
+                put_pixel(game, x, y, game->ceiling_color);
             else if (y < wall_end) {
                 int tex_y = ((y - wall_start) * current_texture->height) / wall_height;
                 if (tex_y >= current_texture->height)
@@ -152,7 +152,7 @@ void draw_simple_scene(t_game *game)
                 
                 put_pixel(game, x, y, color);
             } else
-                put_pixel(game, x, y, create_color(100, 50, 0));
+                put_pixel(game, x, y, game->floor_color);
             y++;
         }
         x++;

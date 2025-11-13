@@ -11,6 +11,8 @@ int main(int argc, char **argv)
         write(2, "Failed to load map file\n", 24);
         return 1;
     }
+    parse_config_data(&game, argv[1]);  // Parse texture/color data into struct
+    print_config_data(&game);           // Print data from struct
     init_game(&game);
     if (!init_mlx(&game))
         return 1;
