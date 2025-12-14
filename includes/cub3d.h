@@ -94,10 +94,68 @@ typedef struct s_game
 	int			show_minimap;
 }	t_game;
 
+typedef struct s_read_data
+{
+	int		map_started;
+	int		*maxw;
+	t_game	*game;
+}	t_read_data;
+
+typedef struct s_ray
+{
+	double	player_pos_x;
+	double	player_pos_y;
+	double	ray_dx;
+	double	ray_dy;
+	int		map_x;
+	int		map_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+}	t_ray;
+
+typedef struct s_wall
+{
+	int			wall_height;
+	int			wall_start;
+	int			wall_end;
+	t_texture	*texture;
+	int			tex_x;
+	int			side;
+}	t_wall;
+
+typedef struct s_tex_parse
+{
+	char	**target;
+	int		*has_flag;
+}	t_tex_parse;
+
 int		parse_file(const char *filename, t_game *game);
 int		load_map(const char *filename, t_game *game);
+int		check_extension(const char *filename);
 void	parse_config_data(t_game *game, const char *filename);
 void	print_config_data(t_game *game);
+char	*extract_path(char *line, int start);
+int		parse_rgb_component(char *line, int *i, int *value);
+int		parse_rgb(char *line, int start);
+int		is_config_line(char c);
+int		should_skip_line(char *line, int map_started);
+int		get_line_length(char *line);
+char	**resize_lines(char **lines, int old_cap, int new_cap, int height);
+int		is_valid_char(char c);
+int		validate_char(char c, t_game *game, char **lines, int i);
+char	*create_padded_line(char *src, int width);
+int		process_map_line(t_game *game, char **lines, int i);
+int		read_map_lines(int fd, char ***lines, int *maxw, t_game *game);
+void	parse_texture_line(t_game *game, char *line);
+void	parse_color_line(t_game *game, char *line);
+int		process_config_line(t_game *game, char *line);
+void	free_lines(char **lines, int height);
 int		init_mlx(t_game *game);
 int		load_texture(t_game *game, t_texture *texture, char *path);
 int		load_textures(t_game *game);
@@ -116,6 +174,7 @@ int		handle_mouse(int x, int y, t_game *game);
 void	move_player(t_game *game, double dx, double dy);
 void	free_map(char **map, int height);
 void	init_game(t_game *game);
+void	init_player(t_game *game);
 void	init_parse_state(t_parse *parse);
 int		validate_parse_complete(t_parse *parse);
 int		validate_file_extension(const char *filename);
@@ -124,5 +183,20 @@ int		validate_texture_file(const char *path);
 int		validate_all_textures(t_game *game);
 void	print_map_debug(t_game *game);
 int		validate_map(t_game *game);
+void		init_ray_dir(t_ray *ray, double angle);
+void		init_step_x(t_ray *ray);
+void		init_step_y(t_ray *ray);
+void		perform_dda(t_game *game, t_ray *ray);
+double		calculate_wall_dist(t_ray *ray);
+int			calculate_wall_height(double perp_wall_dist, int window_height);
+t_texture	*select_texture(t_game *game, t_ray *ray);
+int			calculate_tex_x(t_ray *ray, t_texture *tex, double wall_x);
+double		calculate_wall_x(t_ray *ray, double perp_wall_dist);
+int			apply_shading(int color, int side);
+int	validate_map(t_game *game);
+int	validate_map_chars(t_game *game);
+int	validate_map_closed(t_game *game);
+int	process_parse_line(t_game *game, char *line, int fd);
+//int	is_empty_line(char *line);
 
 #endif
