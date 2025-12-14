@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/14 12:46:44 by afahs             #+#    #+#             */
+/*   Updated: 2025/12/14 12:47:13 by afahs            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -129,54 +141,66 @@ typedef struct s_wall
 	int			side;
 }	t_wall;
 
-int		parse_file(const char *filename, t_game *game);
-int		load_map(const char *filename, t_game *game);
-int		check_extension(const char *filename);
-void	parse_config_data(t_game *game, const char *filename);
-void	print_config_data(t_game *game);
-char	*extract_path(char *line, int start);
-int		parse_rgb_component(char *line, int *i, int *value);
-int		parse_rgb(char *line, int start);
-int		is_config_line(char c);
-int		should_skip_line(char *line, int map_started);
-int		get_line_length(char *line);
-char	**resize_lines(char **lines, int old_cap, int new_cap, int height);
-int		is_valid_char(char c);
-int		validate_char(char c, t_game *game, char **lines, int i);
-char	*create_padded_line(char *src, int width);
-int		process_map_line(t_game *game, char **lines, int i);
-int		read_map_lines(int fd, char ***lines, int *maxw, t_game *game);
-void	parse_texture_line(t_game *game, char *line);
-void	parse_color_line(t_game *game, char *line);
-int		process_config_line(t_game *game, char *line);
-void	free_lines(char **lines, int height);
-int		init_mlx(t_game *game);
-int		load_texture(t_game *game, t_texture *texture, char *path);
-int		load_textures(t_game *game);
-int		is_wall(t_game *game, int x, int y);
-int		render_frame(t_game *game);
-void	draw_simple_scene(t_game *game);
-void	draw_minimap(t_game *game);
-void	put_pixel(t_game *game, int x, int y, int color);
-int		get_texture_pixel(t_texture *texture, int x, int y);
-int		create_color(int r, int g, int b);
-int		handle_keypress(int keycode, t_game *game);
-int		handle_keyrelease(int keycode, t_game *game);
-int		handle_close(t_game *game);
-void	process_input(t_game *game);
-int		handle_mouse(int x, int y, t_game *game);
-void	move_player(t_game *game, double dx, double dy);
-void	free_map(char **map, int height);
-void	init_game(t_game *game);
-void	init_player(t_game *game);
-void	init_parse_state(t_parse *parse);
-int		validate_parse_complete(t_parse *parse);
-int		validate_file_extension(const char *filename);
-int		validate_file_access(const char *filename);
-int		validate_texture_file(const char *path);
-int		validate_all_textures(t_game *game);
-void	print_map_debug(t_game *game);
-int		validate_map(t_game *game);
+typedef struct s_tex_parse
+{
+	char	**target;
+	int		*has_flag;
+}	t_tex_parse;
+
+typedef struct s_color_parse
+{
+	int		*target_color;
+	int		*has_flag;
+}	t_color_parse;
+
+int			parse_file(const char *filename, t_game *game);
+int			load_map(const char *filename, t_game *game);
+int			check_extension(const char *filename);
+void		parse_config_data(t_game *game, const char *filename);
+void		print_config_data(t_game *game);
+char		*extract_path(char *line, int start);
+int			parse_rgb_component(char *line, int *i, int *value);
+int			parse_rgb(char *line, int start);
+int			is_config_line(char c);
+int			should_skip_line(char *line, int map_started);
+int			get_line_length(char *line);
+char		**resize_lines(char **lines, int old_cap, int new_cap, int height);
+int			is_valid_char(char c);
+int			validate_char(char c, t_game *game, char **lines, int i);
+char		*create_padded_line(char *src, int width);
+int			process_map_line(t_game *game, char **lines, int i);
+int			read_map_lines(int fd, char ***lines, int *maxw, t_game *game);
+void		parse_texture_line(t_game *game, char *line);
+void		parse_color_line(t_game *game, char *line);
+int			process_config_line(t_game *game, char *line);
+void		free_lines(char **lines, int height);
+int			init_mlx(t_game *game);
+int			load_texture(t_game *game, t_texture *texture, char *path);
+int			load_textures(t_game *game);
+int			is_wall(t_game *game, int x, int y);
+int			render_frame(t_game *game);
+void		draw_simple_scene(t_game *game);
+void		draw_minimap(t_game *game);
+void		put_pixel(t_game *game, int x, int y, int color);
+int			get_texture_pixel(t_texture *texture, int x, int y);
+int			create_color(int r, int g, int b);
+int			handle_keypress(int keycode, t_game *game);
+int			handle_keyrelease(int keycode, t_game *game);
+int			handle_close(t_game *game);
+void		process_input(t_game *game);
+int			handle_mouse(int x, int y, t_game *game);
+void		move_player(t_game *game, double dx, double dy);
+void		free_map(char **map, int height);
+void		init_game(t_game *game);
+void		init_player(t_game *game);
+void		init_parse_state(t_parse *parse);
+int			validate_parse_complete(t_parse *parse);
+int			validate_file_extension(const char *filename);
+int			validate_file_access(const char *filename);
+int			validate_texture_file(const char *path);
+int			validate_all_textures(t_game *game);
+void		print_map_debug(t_game *game);
+int			validate_map(t_game *game);
 void		init_ray_dir(t_ray *ray, double angle);
 void		init_step_x(t_ray *ray);
 void		init_step_y(t_ray *ray);
@@ -187,5 +211,15 @@ t_texture	*select_texture(t_game *game, t_ray *ray);
 int			calculate_tex_x(t_ray *ray, t_texture *tex, double wall_x);
 double		calculate_wall_x(t_ray *ray, double perp_wall_dist);
 int			apply_shading(int color, int side);
+int			parse_texture_id(char *line, t_game *game, t_parse *parse);
+int			parse_color_id(char *line, t_game *game, t_parse *parse);
+int			is_map_line(char *line);
+int			validate_map(t_game *game);
+int			validate_map_closed(t_game *game);
+int			process_config_lines(int fd, t_game *game, int *result);
+int			is_empty_line_parse(char *line);
+int			flood_fill_check(t_game *game, int x, int y, char **visited);
+int			handle_config_line_parse(char *line, t_game *game,
+				int *res, int fd);
 
 #endif

@@ -3,6 +3,7 @@ NAME = cub3D
 SRC_DIR = src
 MAP_DIR = src/map
 RENDER_DIR = src/render
+PRC_DIR = src/parsing
 INC_DIR = includes
 GNL_DIR = gnl
 OBJ_DIR = obj
@@ -10,10 +11,10 @@ MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = $(SRC_DIR)/main.c \
-	   $(SRC_DIR)/game.c \
-	   $(SRC_DIR)/init_game.c \
-	   $(SRC_DIR)/input.c \
-	   $(SRC_DIR)/keys.c \
+	   $(SRC_DIR)/init/game.c \
+	   $(SRC_DIR)/init/init_game.c \
+	   $(SRC_DIR)/input/input.c \
+	   $(SRC_DIR)/input/keys.c \
 	   $(RENDER_DIR)/render.c \
 	   $(RENDER_DIR)/minimap.c \
 	   $(RENDER_DIR)/raycast.c \
@@ -26,8 +27,13 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(MAP_DIR)/map_utils.c \
 	   $(MAP_DIR)/map_read.c \
 	   $(MAP_DIR)/map_load.c \
-	   $(SRC_DIR)/parsing.c \
-	   $(SRC_DIR)/validation.c \
+	   $(PRC_DIR)/parsing.c \
+	   $(PRC_DIR)/parse_texture.c \
+	   $(PRC_DIR)/parse_color.c \
+	   $(PRC_DIR)/parse_map_validate.c \
+	   $(PRC_DIR)/parse_utils.c \
+	   $(PRC_DIR)/parse_helpers.c \
+	   $(PRC_DIR)/validation.c \
 	   $(GNL_DIR)/get_next_line.c \
 	   $(GNL_DIR)/get_next_line_utils.c
 
