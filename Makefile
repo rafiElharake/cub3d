@@ -3,7 +3,6 @@ NAME = cub3D
 SRC_DIR = src
 MAP_DIR = src/map
 RENDER_DIR = src/render
-PARSE_DIR = src/parsing
 INC_DIR = includes
 GNL_DIR = gnl
 OBJ_DIR = obj
@@ -27,12 +26,8 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(MAP_DIR)/map_utils.c \
 	   $(MAP_DIR)/map_read.c \
 	   $(MAP_DIR)/map_load.c \
-	   $(PARSE_DIR)/parsing.c \
-	   $(PARSE_DIR)/parse_colors.c \
-	   $(PARSE_DIR)/parse_line.c \
-	   $(PARSE_DIR)/parse_utils.c \
-	   $(PARSE_DIR)/validate_mapcl.c \
-	   $(PARSE_DIR)/validation.c \
+	   $(SRC_DIR)/parsing.c \
+	   $(SRC_DIR)/validation.c \
 	   $(GNL_DIR)/get_next_line.c \
 	   $(GNL_DIR)/get_next_line_utils.c
 

@@ -129,12 +129,6 @@ typedef struct s_wall
 	int			side;
 }	t_wall;
 
-typedef struct s_tex_parse
-{
-	char	**target;
-	int		*has_flag;
-}	t_tex_parse;
-
 int		parse_file(const char *filename, t_game *game);
 int		load_map(const char *filename, t_game *game);
 int		check_extension(const char *filename);
@@ -193,10 +187,5 @@ t_texture	*select_texture(t_game *game, t_ray *ray);
 int			calculate_tex_x(t_ray *ray, t_texture *tex, double wall_x);
 double		calculate_wall_x(t_ray *ray, double perp_wall_dist);
 int			apply_shading(int color, int side);
-int	validate_map(t_game *game);
-int	validate_map_chars(t_game *game);
-int	validate_map_closed(t_game *game);
-int	process_parse_line(t_game *game, char *line, int fd);
-//int	is_empty_line(char *line);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 07:30:12 by afahs             #+#    #+#             */
-/*   Updated: 2025/12/14 08:35:41 by afahs            ###   ########.fr       */
+/*   Updated: 2025/12/14 07:52:55 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	set_player_angle(t_game *game, char direction)
+static void set_player_angle(t_game *game, char direction)
 {
 	if (direction == 'N')
 		game->player_angle = -M_PI / 2;
@@ -24,7 +24,7 @@ static void	set_player_angle(t_game *game, char direction)
 		game->player_angle = M_PI;
 }
 
-static int	find_player_position(t_game *game, int x, int y)
+static int find_player_position(t_game *game, int x, int y)
 {
 	char	c;
 
@@ -39,7 +39,7 @@ static int	find_player_position(t_game *game, int x, int y)
 	return (0);
 }
 
-void	init_player(t_game *game)
+void init_player(t_game *game)
 {
 	int	x;
 	int	y;
