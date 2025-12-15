@@ -16,13 +16,13 @@ int	validate_file_extension(const char *filename)
 {
 	int	len;
 
-	len = strlen(filename);
+	len = strlen(filename);//not allowed
 	if (len < 5)
 	{
 		write(2, "Error\nInvalid filename\n", 23);
 		return (0);
 	}
-	if (strcmp(filename + len - 4, ".cub") != 0)
+	if (strcmp(filename + len - 4, ".cub") != 0)//not allowed
 	{
 		write(2, "Error\nFile must have .cub extension\n", 37);
 		return (0);
@@ -48,11 +48,11 @@ static int	check_xpm_extension(const char *path)
 {
 	int	len;
 
-	len = strlen(path);
+	len = strlen(path);//not allowed
 	if (len < 5 || strcmp(path + len - 4, ".xpm") != 0)
 	{
 		write(2, "Error\nTexture must be .xpm file: ", 34);
-		write(2, path, strlen(path));
+		write(2, path, strlen(path));//not allowed
 		write(2, "\n", 1);
 		return (0);
 	}
@@ -74,7 +74,7 @@ int	validate_texture_file(const char *path)
 	if (fd < 0)
 	{
 		write(2, "Error\nCannot open texture file: ", 33);
-		write(2, path, strlen(path));
+		write(2, path, strlen(path));//not allowed
 		write(2, "\n", 1);
 		return (0);
 	}

@@ -23,7 +23,7 @@ static char	**alloc_visited(t_game *game)
 	i = 0;
 	while (i < game->map_height)
 	{
-		visited[i] = calloc(game->map_width, sizeof(char));
+		visited[i] = calloc(game->map_width, sizeof(char));//not allowed
 		if (!visited[i])
 		{
 			while (--i >= 0)

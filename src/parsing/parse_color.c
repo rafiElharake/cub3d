@@ -24,21 +24,21 @@ static int	parse_rgb_values(char *str, int *r, int *g, int *b)
 	char	*end;
 
 	str = skip_whitespace(str);
-	*r = strtol(str, &end, 10);
+	*r = strtol(str, &end, 10);//not allowed
 	if (end == str || *r < 0 || *r > 255)
 		return (0);
 	str = skip_whitespace(end);
 	if (*str != ',')
 		return (0);
 	str++;
-	*g = strtol(str, &end, 10);
+	*g = strtol(str, &end, 10);//not allowed
 	if (end == str || *g < 0 || *g > 255)
 		return (0);
 	str = skip_whitespace(end);
 	if (*str != ',')
 		return (0);
 	str++;
-	*b = strtol(str, &end, 10);
+	*b = strtol(str, &end, 10);//not allowed
 	if (end == str || *b < 0 || *b > 255)
 		return (0);
 	str = skip_whitespace(end);
