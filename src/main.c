@@ -64,7 +64,10 @@ int	main(int argc, char **argv)
 	}
 	memset(&game, 0, sizeof(t_game));
 	if (!validate_and_parse(argv[1], &game))
+	{
+		free_map(game.map, game.map_height);
 		return (1);
+	}
 	print_config_data(&game);
 	print_map_debug(&game);
 	init_game(&game);
