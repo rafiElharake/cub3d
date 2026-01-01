@@ -26,31 +26,3 @@ void	free_map(char **map, int height)
 	}
 	free(map);
 }
-
-static void	print_floor_color(t_game *game)
-{
-	if (game->floor_color >= 0)
-		printf("Floor: %d,%d,%d\n", (game->floor_color >> 16) & 0xFF,
-			(game->floor_color >> 8) & 0xFF, game->floor_color & 0xFF);
-	else
-		printf("Floor: NULL\n");
-}
-
-static void	print_ceiling_color(t_game *game)
-{
-	if (game->ceiling_color >= 0)
-		printf("Ceiling: %d,%d,%d\n", (game->ceiling_color >> 16) & 0xFF,
-			(game->ceiling_color >> 8) & 0xFF, game->ceiling_color & 0xFF);
-	else
-		printf("Ceiling: NULL\n");
-}
-
-void	print_config_data(t_game *game)
-{
-	printf("North: %s\n", game->north_path);
-	printf("South: %s\n", game->south_path);
-	printf("West: %s\n", game->west_path);
-	printf("East: %s\n", game->east_path);
-	print_floor_color(game);
-	print_ceiling_color(game);
-}

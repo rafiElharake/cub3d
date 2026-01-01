@@ -35,24 +35,6 @@ static void	setup_hooks(t_game *game)
 	mlx_loop_hook(game->mlx, render_frame, game);
 }
 
-void	print_map_debug(t_game *game)
-{
-	int	y;
-
-	y = 0;
-	printf("\n=== MAP DEBUG ===\n");
-	printf("Width: %d, Height: %d\n", game->map_width, game->map_height);
-	printf("Player: (%d, %d) facing '%c'\n",
-		game->player_start_x, game->player_start_y, game->player_dir);
-	printf("\nMap content:\n");
-	while (y < game->map_height)
-	{
-		printf("Row %2d: [%s]\n", y, game->map[y]);
-		y++;
-	}
-	printf("=================\n\n");
-}
-
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -68,8 +50,6 @@ int	main(int argc, char **argv)
 		free_map(game.map, game.map_height);
 		return (1);
 	}
-	print_config_data(&game);
-	print_map_debug(&game);
 	init_game(&game);
 	if (!init_mlx(&game))
 		return (1);
