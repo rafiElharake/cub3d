@@ -72,3 +72,19 @@ int	flood_fill_check(t_game *game, int x, int y, char **visited)
 		return (0);
 	return (1);
 }
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (1)
+	{
+		if ((!s1[i]) && (!s2[i]))
+			return (0);
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
+}

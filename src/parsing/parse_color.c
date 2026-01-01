@@ -19,30 +19,50 @@ static char	*skip_whitespace(char *str)
 	return (str);
 }
 
+static int	parse_uint_token(char **p, int *out)
+{
+	long	val;
+	char	*s;
+
+	s = skip_whitespace(*p);
+	val = 0;
+	if (*s == '+')
+		s++;
+	if (*s < '0' || *s > '9')
+		return (0);
+	while (*s >= '0' && *s <= '9')
+	{
+		val = val * 10 + (*s - '0');
+		if (val > 2147483647)
+			return (0);
+		s++;
+	}
+	*out = (int)val;
+	*p = s;
+	return (1);
+}
+
 static int	parse_rgb_values(char *str, int *r, int *g, int *b)
 {
-	char	*end;
+	char	*p;
 
-	str = skip_whitespace(str);
-	*r = strtol(str, &end, 10);//not allowed
-	if (end == str || *r < 0 || *r > 255)
+	p = str;
+	if (!parse_uint_token(&p, r) || *r < 0 || *r > 255)
 		return (0);
-	str = skip_whitespace(end);
-	if (*str != ',')
+	p = skip_whitespace(p);
+	if (*p != ',')
 		return (0);
-	str++;
-	*g = strtol(str, &end, 10);//not allowed
-	if (end == str || *g < 0 || *g > 255)
+	p++;
+	if (!parse_uint_token(&p, g) || *g < 0 || *g > 255)
 		return (0);
-	str = skip_whitespace(end);
-	if (*str != ',')
+	p = skip_whitespace(p);
+	if (*p != ',')
 		return (0);
-	str++;
-	*b = strtol(str, &end, 10);//not allowed
-	if (end == str || *b < 0 || *b > 255)
+	p++;
+	if (!parse_uint_token(&p, b) || *b < 0 || *b > 255)
 		return (0);
-	str = skip_whitespace(end);
-	if (*str != '\0' && *str != '\n')
+	p = skip_whitespace(p);
+	if (*p != '\0' && *p != '\n')
 		return (0);
 	return (1);
 }

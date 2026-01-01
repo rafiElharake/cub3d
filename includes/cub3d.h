@@ -22,6 +22,8 @@
 # include <errno.h>
 # include "../minilibx-linux/mlx.h"
 # include "../gnl/get_next_line.h"
+# include <stddef.h>
+# include <stdint.h>
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
@@ -219,5 +221,7 @@ int			is_empty_line_parse(char *line);
 int			flood_fill_check(t_game *game, int x, int y, char **visited);
 int			handle_config_line_parse(char *line, t_game *game,
 				int *res, int fd);
+void		*ft_calloc(size_t nmemb, size_t size);
+int			ft_strcmp(const char *s1, const char *s2);
 
 #endif

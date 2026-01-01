@@ -23,7 +23,7 @@ static void	trim_end(char *str)
 {
 	int	len;
 
-	len = strlen(str);//not allowed
+	len = ft_strlen(str);
 	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t'
 			|| str[len - 1] == '\n' || str[len - 1] == '\r'))
 	{
@@ -89,7 +89,7 @@ int	parse_texture_id(char *line, t_game *game, t_parse *parse)
 		write(2, "Error\nTexture path missing\n", 28);
 		return (0);
 	}
-	path = strdup(line);//not allowed
+	path = ft_strdup(line);
 	if (!path)
 		return (0);
 	parse_texture_id_helper(tex, path);

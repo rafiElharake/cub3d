@@ -2,7 +2,7 @@ NO ./textures/WallN.xpm
 SO ./textures/WallS.xpm
 WE ./textures/WallW.xpm
 EA ./textures/WallE.xpm
-F 220,100,0
+F 220,a,0
 C 225,30,0
 
 1111111111111111111111111

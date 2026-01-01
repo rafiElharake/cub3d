@@ -66,3 +66,32 @@ int	parse_file(const char *filename, t_game *game)
 		return (0);
 	return (1);
 }
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t			i;
+	unsigned char	*x;
+
+	i = 0;
+	x = (unsigned char *)s;
+	while (i < n)
+	{
+		*x = '\0';
+		i++;
+		x++;
+	}
+	return ;
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*ret;
+
+	if (size != 0 && nmemb > SIZE_MAX / size)
+		return (NULL);
+	ret = malloc(size * nmemb);
+	if (!ret)
+		return (0);
+	ft_bzero(ret, size * nmemb);
+	return (ret);
+}
