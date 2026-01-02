@@ -24,13 +24,24 @@ int	is_empty_line_parse(char *line)
 	return (1);
 }
 
+void	free_texture_paths(t_game *game)
+{
+	if (game->north_path)
+		free(game->north_path);
+	if (game->south_path)
+		free(game->south_path);
+	if (game->west_path)
+		free(game->west_path);
+	if (game->east_path)
+		free(game->east_path);
+}
+
 int	handle_config_line_parse(char *line, t_game *game, int *result, int fd)
 {
 	*result = parse_texture_id(line, game, &game->parse_state);
+	(void)fd;
 	if (*result == 0)
 	{
-		free(line);
-		close(fd);
 		return (0);
 	}
 	if (*result == -1)
@@ -38,15 +49,11 @@ int	handle_config_line_parse(char *line, t_game *game, int *result, int fd)
 		*result = parse_color_id(line, game, &game->parse_state);
 		if (*result == 0)
 		{
-			free(line);
-			close(fd);
 			return (0);
 		}
 		if (*result == -1)
 		{
 			write(2, "Error\nInvalid configuration line\n", 34);
-			free(line);
-			close(fd);
 			return (0);
 		}
 	}

@@ -83,18 +83,26 @@ static int	handle_line(char *line, t_game *game, int *result, int fd)
 int	process_config_lines(int fd, t_game *game, int *result)
 {
 	char	*line;
+	char	*temp;
 
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (is_empty_line_parse(line) && !game->parse_state. map_started)
+		if (is_empty_line_parse(line) && !game->parse_state.map_started)
 		{
 			free(line);
 			line = get_next_line(fd);
 			continue ;
 		}
 		if (! handle_line(line, game, result, fd))
-			return (free(line), 0);
+		{
+			free(line);
+			while ((temp = get_next_line(fd)))
+				free(temp);
+			close(fd);
+			free_texture_paths(game);
+			return (0);
+		}
 		if (game->parse_state.map_started)
 			break ;
 		free(line);

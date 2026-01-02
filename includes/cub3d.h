@@ -223,5 +223,6 @@ int			handle_config_line_parse(char *line, t_game *game,
 				int *res, int fd);
 void		*ft_calloc(size_t nmemb, size_t size);
 int			ft_strcmp(const char *s1, const char *s2);
+void		free_texture_paths(t_game *game);
 
 #endif
