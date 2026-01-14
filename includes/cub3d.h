@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 12:46:44 by afahs             #+#    #+#             */
-/*   Updated: 2025/12/14 12:47:13 by afahs            ###   ########.fr       */
+/*   Updated: 2026/01/14 16:36:06 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,5 +224,6 @@ int			handle_config_line_parse(char *line, t_game *game,
 void		*ft_calloc(size_t nmemb, size_t size);
 int			ft_strcmp(const char *s1, const char *s2);
 void		free_texture_paths(t_game *game);
+void		cleanup_all(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 05:06:32 by afahs             #+#    #+#             */
-/*   Updated: 2025/12/14 05:15:06 by afahs            ###   ########.fr       */
+/*   Updated: 2026/01/14 16:21:43 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,4 @@ int	get_texture_pixel(t_texture *texture, int x, int y)
 		return (0);
 	pixel = texture->data + (y * texture->line_len + x * (texture->bpp / 8));
 	return (*(int *) pixel);
-}
-
-int	handle_close(t_game *game)
-{
-	mlx_destroy_image(game->mlx, game->image);
-	mlx_destroy_window(game->mlx, game->window);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	exit(0);
-	return (0);
 }

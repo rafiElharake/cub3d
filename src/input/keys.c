@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 05:31:01 by afahs             #+#    #+#             */
-/*   Updated: 2025/12/14 05:31:04 by afahs            ###   ########.fr       */
+/*   Updated: 2026/01/14 16:08:43 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
 	{
-		mlx_destroy_image(game->mlx, game->image);
-		mlx_destroy_window(game->mlx, game->window);
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
+		cleanup_all(game);
 		exit(0);
 	}
 	if (keycode == 'w' || keycode == 'W')

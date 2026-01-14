@@ -13,6 +13,7 @@ MLX_LIB = $(MLX_DIR)/libmlx.a
 SRCS = $(SRC_DIR)/main.c \
 	   $(SRC_DIR)/init/game.c \
 	   $(SRC_DIR)/init/init_game.c \
+	   $(SRC_DIR)/init/close.c \
 	   $(SRC_DIR)/input/input.c \
 	   $(SRC_DIR)/input/keys.c \
 	   $(RENDER_DIR)/render.c \
@@ -32,6 +33,7 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(PRC_DIR)/parse_color.c \
 	   $(PRC_DIR)/parse_map_validate.c \
 	   $(PRC_DIR)/parse_utils.c \
+	   $(PRC_DIR)/parse_utils_2.c \
 	   $(PRC_DIR)/parse_helpers.c \
 	   $(PRC_DIR)/validation.c \
 	   $(GNL_DIR)/get_next_line.c \
