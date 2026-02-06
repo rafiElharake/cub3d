@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 00:00:00 by afahs             #+#    #+#             */
-/*   Updated: 2025/12/14 07:26:08 by afahs            ###   ########.fr       */
+/*   Updated: 2026/02/06 22:13:03 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,14 @@ int	is_config_line(char c)
 
 int	should_skip_line(char *line, int map_started)
 {
-	if (line[0] == '\n' || line[0] == '\0')
+	int	i;
+
+	i = 0;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	if (line[i] == '\n' || line[i] == '\0')
 		return (1);
-	if (!map_started && is_config_line(line[0]))
+	if (!map_started && is_config_line(line[i]))
 		return (1);
 	return (0);
 }

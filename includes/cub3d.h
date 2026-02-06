@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 12:46:44 by afahs             #+#    #+#             */
-/*   Updated: 2026/01/14 16:36:06 by afahs            ###   ########.fr       */
+/*   Updated: 2026/02/06 23:05:54 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,5 +225,14 @@ void		*ft_calloc(size_t nmemb, size_t size);
 int			ft_strcmp(const char *s1, const char *s2);
 void		free_texture_paths(t_game *game);
 void		cleanup_all(t_game *game);
+char		*skip_whitespace_texture(char *str);
+void		trim_end(char *str);
+int			check_texture_id(char *line);
+void		set_north_south(char *line, t_game *game,
+				t_parse *parse, t_tex_parse *tex);
+void		set_west_east(char *line, t_game *game, t_parse *parse,
+				t_tex_parse *tex);
+int			set_texture_target(char *line, t_game *game, t_parse *parse,
+				t_tex_parse *tex);
 
 #endif

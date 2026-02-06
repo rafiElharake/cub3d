@@ -6,59 +6,24 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 08:30:00 by afahs             #+#    #+#             */
-/*   Updated: 2026/02/06 21:30:03 by afahs            ###   ########.fr       */
+/*   Updated: 2026/02/06 23:03:04 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char	*skip_whitespace(char *str)
-{
-	while (*str == ' ' || *str == '\t')
-		str++;
-	return (str);
-}
-
-static void	trim_end(char *str)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t'
-			|| str[len - 1] == '\n' || str[len - 1] == '\r'))
-	{
-		str[len - 1] = '\0';
-		len--;
-	}
-}
-
-static int	set_texture_target(char *line, t_game *game,
+int	set_texture_target(char *line, t_game *game,
 	t_parse *parse, t_tex_parse *tex)
 {
-	line = skip_whitespace(line);
-	if (line[0] == 'N' && line[1] == 'O')
-	{
-		tex->target = &game->north_path;
-		tex->has_flag = &parse->has_north;
-	}
-	else if (line[0] == 'S' && line[1] == 'O')
-	{
-		tex->target = &game->south_path;
-		tex->has_flag = &parse->has_south;
-	}
-	else if (line[0] == 'W' && line[1] == 'E')
-	{
-		tex->target = &game->west_path;
-		tex->has_flag = &parse->has_west;
-	}
-	else if (line[0] == 'E' && line[1] == 'A')
-	{
-		tex->target = &game->east_path;
-		tex->has_flag = &parse->has_east;
-	}
-	else
+	char	*start;
+
+	start = line;
+	line = skip_whitespace_texture(line);
+	if (!check_texture_id(line))
 		return (-1);
-	return (2);
+	set_north_south(line, game, parse, tex);
+	set_west_east(line, game, parse, tex);
+	return ((line - start) + 2);
 }
 
 static void	parse_texture_id_helper(t_tex_parse tex, char *path)
@@ -83,7 +48,7 @@ int	parse_texture_id(char *line, t_game *game, t_parse *parse)
 		return (0);
 	}
 	line += skip;
-	line = skip_whitespace(line);
+	line = skip_whitespace_texture(line);
 	if (*line == '\0' || *line == '\n')
 	{
 		write(2, "Error\nTexture path missing\n", 28);

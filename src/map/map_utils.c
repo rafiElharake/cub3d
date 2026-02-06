@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 00:00:00 by afahs             #+#    #+#             */
-/*   Updated: 2025/12/14 07:55:46 by afahs            ###   ########.fr       */
+/*   Updated: 2026/02/06 22:18:53 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*create_padded_line(char *src, int width)
 		return (NULL);
 	j = 0;
 	while (j < width)
-		dst[j++] = '1';
+		dst[j++] = ' ';
 	j = 0;
 	while (j < l)
 	{

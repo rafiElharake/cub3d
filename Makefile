@@ -30,6 +30,7 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(MAP_DIR)/map_load.c \
 	   $(PRC_DIR)/parsing.c \
 	   $(PRC_DIR)/parse_texture.c \
+	   $(PRC_DIR)/parse_texture_utils.c \
 	   $(PRC_DIR)/parse_color.c \
 	   $(PRC_DIR)/parse_map_validate.c \
 	   $(PRC_DIR)/parse_utils.c \

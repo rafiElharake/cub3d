@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 08:30:00 by afahs             #+#    #+#             */
-/*   Updated: 2026/01/14 16:36:20 by afahs            ###   ########.fr       */
+/*   Updated: 2026/02/06 22:27:09 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,50 @@ static void	free_visited(char **visited, int height)
 	free(visited);
 }
 
+static int	check_horizontal_edges(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->map_width)
+	{
+		if (game->map[0][i] != '1' && game->map[0][i] != ' ')
+			return (0);
+		if (game->map[game->map_height - 1][i] != '1'
+			&& game->map[game->map_height - 1][i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static int	check_vertical_edges(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->map_height)
+	{
+		if (game->map[i][0] != '1' && game->map[i][0] != ' ')
+			return (0);
+		if (game->map[i][game->map_width - 1] != '1'
+			&& game->map[i][game->map_width - 1] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	validate_map_closed(t_game *game)
 {
 	char	**visited;
 	int		result;
 
+	if (!check_horizontal_edges(game) || !check_vertical_edges(game))
+	{
+		write(2, "Error\nMap is not closed by walls\n", 34);
+		return (0);
+	}
 	visited = alloc_visited(game);
 	if (!visited)
 		return (0);

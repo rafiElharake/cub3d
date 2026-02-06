@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 08:30:00 by afahs             #+#    #+#             */
-/*   Updated: 2025/12/14 12:14:34 by afahs            ###   ########.fr       */
+/*   Updated: 2026/02/06 22:16:56 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,24 @@ static int	parse_rgb_values(char *str, int *r, int *g, int *b)
 static int	set_color_target(char *line, t_game *game,
 	t_parse *parse, t_color_parse *col)
 {
+	char	*start;
+	int		skip;
+
+	start = line;
 	line = skip_whitespace(line);
 	if (line[0] == 'F')
 	{
 		col->target_color = &game->floor_color;
 		col->has_flag = &parse->has_floor;
-		return (1);
+		skip = (line - start) + 1;
+		return (skip);
 	}
 	else if (line[0] == 'C')
 	{
 		col->target_color = &game->ceiling_color;
 		col->has_flag = &parse->has_ceiling;
-		return (1);
+		skip = (line - start) + 1;
+		return (skip);
 	}
 	return (-1);
 }
