@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 06:50:05 by afahs             #+#    #+#             */
-/*   Updated: 2026/02/06 21:36:31 by afahs            ###   ########.fr       */
+/*   Updated: 2026/02/06 21:45:11 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	validate_and_parse(char *filename, t_game *game)
 
 static void	setup_hooks(t_game *game)
 {
-	mlx_mouse_hide(game->mlx, game->window);
+//	mlx_mouse_hide(game->mlx, game->window);
 	mlx_hook(game->window, 2, 1L << 0, handle_keypress, game);
 	mlx_hook(game->window, 3, 1L << 1, handle_keyrelease, game);
 	mlx_hook(game->window, 17, 1L << 17, handle_close, game);
