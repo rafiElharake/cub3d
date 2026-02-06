@@ -6,7 +6,7 @@
 /*   By: afahs <afahs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:20:28 by afahs             #+#    #+#             */
-/*   Updated: 2026/01/14 16:21:55 by afahs            ###   ########.fr       */
+/*   Updated: 2026/02/06 21:35:43 by afahs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	cleanup_all(t_game *game)
 	}
 	if (game->map)
 		free_map(game->map, game->map_height);
+	free_texture_paths(game);
 }
 
 int	handle_close(t_game *game)
